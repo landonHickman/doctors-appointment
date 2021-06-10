@@ -7,6 +7,6 @@ class Patient < ApplicationRecord
      appointment = doctor.appointments.find_by(patient_id: self.id)
       {doctor: doctor.name, date: appointment.date}
     end
-    return {patient: self.name, date: appDate}
+    return {patient: self.name, appointment: appDate}
   end
 end
