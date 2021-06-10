@@ -1,6 +1,6 @@
 class Api::AppointmentsController < ApplicationController
 
   def index
-    render json: Appointment.all
+    render json: Appointment.doctor_and_patient
   end
 end
