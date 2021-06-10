@@ -5,12 +5,39 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Patient.destroy_all
+Doctor.destroy_all
 Test.destroy_all
 
-Test.create(name: 'Test1')
-Test.create(name: 'Test2')
-Test.create(name: 'Test3')
-Test.create(name: 'Test4')
-Test.create(name: 'Test5')
+day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
-puts 'Seeded 5'
+Test.create( name: 'test1')
+Test.create( name: 'test2')
+Test.create( name: 'test3')
+
+stan = Patient.create( name: 'Stan')
+cartman = Patient.create( name: 'Cartman')
+kenny = Patient.create( name: 'Kenny')
+kyle = Patient.create( name: 'Kyle')
+
+horatio = Doctor.create( name: 'Dr. Horatio')
+hillman = Doctor.create( name: 'Dr. Hillman')
+hickens = Doctor.create( name: 'Dr. Hickens')
+henderson = Doctor.create( name: 'Dr. Henderson')
+
+stan.appointments.create( date: day.sample, doctor_id: horatio.id )
+stan.appointments.create( date: day.sample, doctor_id: hillman.id )
+
+cartman.appointments.create( date: day.sample, doctor_id: hickens.id )
+cartman.appointments.create( date: day.sample, doctor_id: hillman.id )
+
+kenny.appointments.create( date: day.sample, doctor_id: henderson.id )
+kenny.appointments.create( date: day.sample, doctor_id: horatio.id )
+
+kyle.appointments.create( date: day.sample, doctor_id: hillman.id )
+kyle.appointments.create( date: day.sample, doctor_id: hickens.id )
+
+puts  Patient.all.size
+puts Doctor.all.size
+puts Appointment.all.size

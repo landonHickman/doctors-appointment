@@ -3,5 +3,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     get '/tests', to: 'tests#index'
+    resources :patients
+    resources :doctors
+    resources :appointments
   end
 end
