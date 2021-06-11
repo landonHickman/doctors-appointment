@@ -7,9 +7,12 @@ const NavBar = () => {
   return(
     <NavContainer>
     <NavLink to='/'>Home</NavLink>
-    <NavLink to='/examples'>Examples</NavLink>
-    <NavLink to='/about'>About</NavLink>
-    <NavLink to='/tests'>Tests</NavLink>
+    {/* <NavLink to='/examples'>Examples</NavLink> */}
+    {/* <NavLink to='/about'>About</NavLink>
+    <NavLink to='/tests'>Tests</NavLink> */}
+    <NavLink to='/patients'>Patients</NavLink>
+    <NavLink to='/doctors'>Doctors</NavLink>
+    <NavLink to='/appointments'>Appointments</NavLink>
     </NavContainer>
   )
 }

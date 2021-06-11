@@ -6,7 +6,7 @@ const Spinner = () => {
     return (
     <SpinnerContainer>
       <Segment>
-        <Dimmer>
+        <Dimmer active>
           <SemanticLoader content='Loading'/>
         </Dimmer>
         <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
