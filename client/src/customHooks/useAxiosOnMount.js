@@ -21,7 +21,7 @@ const useAxiosOnMount = (url) => {
       setLoading(false)
     }
   }
-  return {data, loading, error}
+  return {data, loading, error, setData}
 }
 
 export default useAxiosOnMount
