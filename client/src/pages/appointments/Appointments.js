@@ -6,10 +6,12 @@ import useAxiosOnMount from '../../customHooks/useAxiosOnMount'
 import useAxios from 'axios-hooks'
 import AppointmentForm from './AppointmentForm'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const Appointments = () => {
   const {data, loading, error, setData} = useAxiosOnMount('/api/appointments')
   const [showAppForm, setShowAppForm] = useState(false)
+  const [showEditForm, setShowEditForm] = useState(false)
 
   const [
     { data: patientsData, loading:patientsLoading, error:patientsError},
@@ -47,8 +49,6 @@ const Appointments = () => {
     })
   }
 
-  // console.log(patientsData)
-  // console.log(doctorsData)
   const showAppUI = async () => {
     setShowAppForm(!showAppForm)
     getPatientsData()
@@ -67,7 +67,6 @@ const Appointments = () => {
   if(loading) return <Spinner />
   if(error) return <ErrorMessage error={error}/>
 
-  console.log(data)
   return(
     <div>
       <div onClick={showAppUI}>Add Appointment</div>
@@ -80,14 +79,16 @@ const Appointments = () => {
         renderData={(app)=>{
           return(
             <div key={app.id} style={{padding: '10px'}}>
-              <h4>Patient {app.patientName} has an appointment with {app.doctorName} on {app.date}.</h4>
+              <h4>ID: {app.id}. Patient {app.patientName} has an appointment with {app.doctorName} on {app.date}.</h4>
               <div onClick={()=>deleteApp(app.id)}>Delete</div>
+              <Link to={`/appointments/${app.id}`}>Edit</Link>
             </div>
           )
         }}
         data={data}
         name='Appointments'
       />
+      
     </div>
   )
 }

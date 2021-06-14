@@ -1,11 +1,11 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Form } from 'semantic-ui-react'
 import Patient from '../patients/Patient'
 
 const AppointmentForm = (props) => {
-  const {patientsData, doctorsData, addApp} = props
-
+  const {patientsData, doctorsData, addApp, editApp, id} = props
 
   const [date, setDate] = useState('')
   const [patientID, setPatientID] = useState('')
@@ -16,10 +16,17 @@ const AppointmentForm = (props) => {
     console.log(patientID)
     console.log(doctorID)
     try{
-      let res = await axios.post(`/api/appointments`, 
+      if(id){
+        let res = await axios.put(`/api/appointments/${id}`, 
         {date: date, patient_id: patientID, doctor_id: doctorID}
       )
-      addApp(res.data)
+      editApp(res.data)
+      }else {
+        let res = await axios.post(`/api/appointments`, 
+          {date: date, patient_id: patientID, doctor_id: doctorID}
+        )
+        addApp(res.data)
+      }
     } catch(err) {
       console.log('err',err)
     }

@@ -1,5 +1,5 @@
 class Api::AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:destroy, :show]
+  before_action :set_appointment, only: [:destroy, :show, :update]
 
   def index
     render json: Appointment.doctor_and_patient
@@ -24,6 +24,21 @@ class Api::AppointmentsController < ApplicationController
       else
         render json: appointment, status: 422
       end
+  end
+
+  def update
+    if @appointment.update(appointment_params)
+      render json:
+      {id: @appointment.id,
+        date: @appointment.date,
+        patientName: @appointment.patient.name,
+        doctorName: @appointment.doctor.name,
+        patient_id: @appointment.patient.id,
+        doctor_id: @appointment.doctor.id
+      }
+    else
+      render json: @appointment, status: 422
+    end
   end
 
   def destroy

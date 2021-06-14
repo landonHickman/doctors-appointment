@@ -11,6 +11,7 @@ import Doctors from './pages/doctors/Doctors';
 import Appointments from './pages/appointments/Appointments';
 import Patient from './pages/patients/Patient';
 import Doctor from './pages/doctors/Doctor';
+import Appointment from './pages/appointments/Appointment';
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
       <Route exact path='/doctors' component={Doctors} />
       <Route exact path='/doctors/:id' component={Doctor} />
       <Route exact path='/appointments' component={Appointments} />
+      <Route exact path='/appointments/:id' component={Appointment} />
+
     </Switch>
     </MAIN_CONTAINER>
     </>
