@@ -43,13 +43,13 @@ const Patient = () => {
         <PatientForm
           addApp={addApp}
           patientId={id} 
-          patientName={data.patient.name} 
+          patientName={data.patient} 
           doctors={doctors} 
           doctorsData={formatDoctorsData()}
         />
       </div>
       <List 
-        name={`Appointments for ${data.patient.name}`}
+        name={`Appointments for ${data.patient}`}
         data={data.appointment}
         renderData = {(a)=> {
           return (

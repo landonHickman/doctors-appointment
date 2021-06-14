@@ -8,7 +8,7 @@ const ButtonComp = (props) => {
   )
 }
 
-const Btn = styled.button`
+const Btn = styled.div`
   border: 2px solid ${BUTTON_TEXT_COLOR};
   border-radius: ${BORDER_RADIUS};
   color: ${BUTTON_TEXT_COLOR};
