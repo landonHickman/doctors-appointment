@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Form, Select } from 'semantic-ui-react'
 
 const PatientForm = (props) => {
-  const {patientId, doctorsData, addApp } = props
+  const {patientId, doctorsData} = props
   const [date, setDate] = useState('')
   const [doctorId, setDoctorId] = useState('')
 

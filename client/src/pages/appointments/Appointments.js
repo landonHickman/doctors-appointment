@@ -7,14 +7,14 @@ import useAxios from 'axios-hooks'
 import AppointmentForm from './AppointmentForm'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { BUTTON } from '../../styles/styles'
 
 const Appointments = () => {
   const {data, loading, error, setData} = useAxiosOnMount('/api/appointments')
   const [showAppForm, setShowAppForm] = useState(false)
-  const [showEditForm, setShowEditForm] = useState(false)
 
   const [
-    { data: patientsData, loading:patientsLoading, error:patientsError},
+    { data: patientsData},
     getPatientsData
   ] = useAxios(
     {
@@ -25,7 +25,7 @@ const Appointments = () => {
   );
 
   const [
-    { data: doctorsData, loading:doctorsLoading, error:doctorsError},
+    { data: doctorsData},
     getDoctorsData
   ] = useAxios(
     {
@@ -69,7 +69,7 @@ const Appointments = () => {
 
   return(
     <div>
-      <div onClick={showAppUI}>Add Appointment</div>
+      <BUTTON onClick={showAppUI}>Add Appointment</BUTTON>
       {showAppForm && <AppointmentForm
         patientsData={formatPatientsData()}
         doctorsData={formatDoctorsData()}
@@ -81,7 +81,7 @@ const Appointments = () => {
             <div key={app.id} style={{padding: '10px'}}>
               <h4>ID: {app.id}. Patient {app.patientName} has an appointment with {app.doctorName} on {app.date}.</h4>
               <div onClick={()=>deleteApp(app.id)}>Delete</div>
-              <Link to={`/appointments/${app.id}`}>Edit</Link>
+              <Link style={{textDecoration: 'none'}} to={`/appointments/${app.id}`}>Edit</Link>
             </div>
           )
         }}

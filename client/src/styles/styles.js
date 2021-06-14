@@ -36,3 +36,10 @@ export const MAIN_CONTAINER = styled.div`
   margin: 10px;
   padding: 20px;
 `
+export const BUTTON = styled.button`
+  border 2px solid ${NAV_BACKGROUND};
+  border-radius: ${BORDER_RADIUS};
+  color: ${TEXT_COLOR};
+  background-color: ${NAV_BACKGROUND};
+  cursor: pointer;
+`

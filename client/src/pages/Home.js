@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom'
 const Home = () => {
   return(
     <div style={{textAlign: 'center'}}>
-      <h1>Check on Appointments</h1>
-      <Link to='/patients'>Patient</Link>
-      <Link to='/doctors'>Doctor</Link>
+      <h1>Home</h1>
+      <Link to='/appointments'>View Appointments</Link>
     </div>
   )
 }

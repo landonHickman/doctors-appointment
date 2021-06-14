@@ -1,8 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { Form } from 'semantic-ui-react'
-import Patient from '../patients/Patient'
 
 const AppointmentForm = (props) => {
   const {patientsData, doctorsData, addApp, editApp, id} = props
@@ -12,9 +10,6 @@ const AppointmentForm = (props) => {
   const [doctorID, setDoctorID] = useState('')
 
   const handleSubmit = async () => {
-    console.log(date)
-    console.log(patientID)
-    console.log(doctorID)
     try{
       if(id){
         let res = await axios.put(`/api/appointments/${id}`, 
@@ -33,12 +28,10 @@ const AppointmentForm = (props) => {
   }
 
   const patientChanged = (e, {value}) => {
-    console.log(value)
     setPatientID(value)
   }
 
   const doctorChanged = (e, {value}) => {
-    console.log(value)
     setDoctorID(value)
   }
 
