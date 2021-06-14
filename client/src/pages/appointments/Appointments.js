@@ -1,59 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ErrorMessage from '../../components/ErrorMessage'
 import List from '../../components/List'
 import Spinner from '../../components/Spinner'
 import useAxiosOnMount from '../../customHooks/useAxiosOnMount'
-import useAxios from 'axios-hooks'
 import AppointmentForm from './AppointmentForm'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { BUTTON } from '../../styles/styles'
+import { Icon, Table } from 'semantic-ui-react'
 
 const Appointments = () => {
   const {data, loading, error, setData} = useAxiosOnMount('/api/appointments')
-  const [showAppForm, setShowAppForm] = useState(false)
-
-  const [
-    { data: patientsData},
-    getPatientsData
-  ] = useAxios(
-    {
-      url: "/api/patients",
-      method: "get"
-    },
-    { manual: true }
-  );
-
-  const [
-    { data: doctorsData},
-    getDoctorsData
-  ] = useAxios(
-    {
-      url: "/api/doctors",
-      method: "get"
-    },
-    { manual: true }
-  );
-
-  const formatPatientsData = () => {
-    if(!patientsData) return []
-    return patientsData.map (p => {
-      return {key: p.id, text:p.name, value: p.id}
-    })
-  }
-  
-  const formatDoctorsData = () => {
-    if(!doctorsData) return []
-    return doctorsData.map (d => {
-      return {key: d.id, text:d.name, value: d.id}
-    })
-  }
-
-  const showAppUI = async () => {
-    setShowAppForm(!showAppForm)
-    getPatientsData()
-    getDoctorsData()
-  }
 
   const addApp = (app) => {
     setData([app, ...data])
@@ -69,19 +25,40 @@ const Appointments = () => {
 
   return(
     <div>
-      <BUTTON onClick={showAppUI}>Add Appointment</BUTTON>
-      {showAppForm && <AppointmentForm
-        patientsData={formatPatientsData()}
-        doctorsData={formatDoctorsData()}
-        addApp={addApp}
-      />}
+      <AppointmentForm addApp={addApp}/>
       <List
         renderData={(app)=>{
           return(
             <div key={app.id} style={{padding: '10px'}}>
-              <h4>ID: {app.id}. Patient {app.patientName} has an appointment with {app.doctorName} on {app.date}.</h4>
-              <div onClick={()=>deleteApp(app.id)}>Delete</div>
-              <Link style={{textDecoration: 'none'}} to={`/appointments/${app.id}`}>Edit</Link>
+              <Table singleLine fixed>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Doctor</Table.HeaderCell>
+                    <Table.HeaderCell>Patient </Table.HeaderCell>
+                    <Table.HeaderCell>Date</Table.HeaderCell>
+                    <Table.HeaderCell>Crud Actions</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+
+                <Table.Body >
+                  <Table.Row>
+                    <Table.Cell>{app.doctorName}</Table.Cell>
+                    <Table.Cell>{app.patientName}</Table.Cell>
+                    <Table.Cell>{app.date}</Table.Cell>
+                    <Table.Cell>
+                      <Link to={{
+                        pathname: `/appointments/edit/${app.id}`,
+                        patient_id: app.patient_id,
+                        patientName: app.patientName,
+                        doctor_id: app.doctor_id,
+                        date: app.date
+                        }}>
+                          <Icon name='edit'></Icon></Link>
+                      <Icon onClick={()=>deleteApp(app.id)} name='trash'></Icon>
+                    </Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
             </div>
           )
         }}

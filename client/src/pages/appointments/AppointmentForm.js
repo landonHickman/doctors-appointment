@@ -1,43 +1,54 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form } from 'semantic-ui-react'
+import {useParams, useLocation, useHistory} from 'react-router-dom'
 
 const AppointmentForm = (props) => {
-  const {patientsData, doctorsData, addApp, editApp, id} = props
+  const location = useLocation()
+  const params = useParams()
+  const history = useHistory()
+  const [date, setDate] = useState(location.date ? location.date : '')
+  const [patientID, setPatientID] = useState(location.patient_id ? location.patient_id : '')
+  const [patients, setPatients] = useState([])
+  const [doctorID, setDoctorID] = useState(location.doctor_id ? location.doctor_id : '')
+  const [doctors, setDoctors] = useState([])
 
-  const [date, setDate] = useState('')
-  const [patientID, setPatientID] = useState('')
-  const [doctorID, setDoctorID] = useState('')
+  useEffect(()=>{
+    getApps()
+  },[])
 
+  const getApps = async () => {
+    let res = await axios.get(`/api/doctors`)
+    let res2 = await axios.get(`/api/patients`)
+    let selectDocData = res.data.map(doc=> {
+      return {key: doc.id, value: doc.id, text: doc.name}
+    })
+    let selectPatientData = res2.data.map(pat=> {
+      return {key: pat.id, value: pat.id, text: pat.name}
+    })
+    setDoctors(selectDocData)
+    setPatients(selectPatientData)
+  }
   const handleSubmit = async () => {
     try{
-      if(id){
-        let res = await axios.put(`/api/appointments/${id}`, 
+      if(params.id){
+        await axios.put(`/api/appointments/${params.id}`, 
         {date: date, patient_id: patientID, doctor_id: doctorID}
-      )
-      editApp(res.data)
-      }else {
-        let res = await axios.post(`/api/appointments`, 
-          {date: date, patient_id: patientID, doctor_id: doctorID}
         )
-        addApp(res.data)
+      }else {
+        await axios.post(`/api/appointments`, 
+        {date: date, patient_id: patientID, doctor_id: doctorID}
+        )
       }
     } catch(err) {
       console.log('err',err)
     }
-  }
-
-  const patientChanged = (e, {value}) => {
-    setPatientID(value)
-  }
-
-  const doctorChanged = (e, {value}) => {
-    setDoctorID(value)
+    history.push('/redirect')
   }
 
   return(
     <div>
-      
+      {params.id ? <h1>Edit Appointment</h1> : null}
       <Form onSubmit={handleSubmit}>
                 <Form.Group widths='equal'>
                     <Form.Input
@@ -47,19 +58,20 @@ const AppointmentForm = (props) => {
                         label='Date'
                         placeholder='Date'
                     />
-
                     <Form.Select
-                        onChange={patientChanged}
+                        value={patientID}
+                        onChange={(e, {value})=>setPatientID(value)}
                         fluid
                         label='Patient'
-                        options={patientsData}
+                        options={patients}
                         placeholder='Patient'
                     />
                     <Form.Select
-                        onChange={doctorChanged}
+                        value={doctorID}
+                        onChange={(e, {value})=>setDoctorID(value)}
                         fluid
                         label='Doctor'
-                        options={doctorsData}
+                        options={doctors}
                         placeholder='Doctor'
                     />
                 </Form.Group>

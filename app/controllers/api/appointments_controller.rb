@@ -10,32 +10,17 @@ class Api::AppointmentsController < ApplicationController
   end
 
   def create
-    appointment = Appointment.new(appointment_params)
-    if(appointment.save)
-      render json:
-        {id: appointment.id,
-          date: appointment.date,
-          patientName: appointment.patient.name,
-          doctorName: appointment.doctor.name,
-          patient_id: appointment.patient.id,
-          doctor_id: appointment.doctor.id
-
-        }
+    @appointment = Appointment.new(appointment_params)
+    if(@appointment.save)
+      render json: @appointment
       else
-        render json: appointment, status: 422
+        render json: {errors: @appointment}, status: 422
       end
   end
 
   def update
     if @appointment.update(appointment_params)
-      render json:
-      {id: @appointment.id,
-        date: @appointment.date,
-        patientName: @appointment.patient.name,
-        doctorName: @appointment.doctor.name,
-        patient_id: @appointment.patient.id,
-        doctor_id: @appointment.doctor.id
-      }
+      render json: @appointment
     else
       render json: @appointment, status: 422
     end
