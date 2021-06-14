@@ -9,7 +9,7 @@ import axios from 'axios'
 
 const Appointments = () => {
   const {data, loading, error, setData} = useAxiosOnMount('/api/appointments')
-  const [showAppForm, setShowAppForm] = useState(true)
+  const [showAppForm, setShowAppForm] = useState(false)
 
   const [
     { data: patientsData, loading:patientsLoading, error:patientsError},
