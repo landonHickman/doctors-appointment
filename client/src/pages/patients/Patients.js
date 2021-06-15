@@ -6,7 +6,6 @@ import ErrorMessage from "../../components/ErrorMessage";
 import List from "../../components/List";
 import Spinner from "../../components/Spinner";
 import useAxiosOnMount from "../../customHooks/useAxiosOnMount";
-import PatientForm from "./PatientForm";
 
 const Patients = () => {
   const { data, loading, error, setData } = useAxiosOnMount("/api/patients");
@@ -21,6 +20,7 @@ const Patients = () => {
 
   return (
     <div>
+      <h1>Patients</h1>
       <Button style={{ marginBottom: "10px" }}>
         <Link to="/patients/new">Add Patient</Link>
       </Button>
@@ -36,7 +36,7 @@ const Patients = () => {
           <List
             renderData={(patient) => {
               return (
-                <Table.Row>
+                <Table.Row key={patient.id}>
                   <Table.Cell>{patient.name}</Table.Cell>
                   <Table.Cell>
                     <Link to={`/patients/${patient.id}`}>View</Link>

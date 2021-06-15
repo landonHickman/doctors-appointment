@@ -20,6 +20,7 @@ const Doctors = () => {
 
   return (
     <div>
+      <h1>Doctors</h1>
       <Button style={{ marginBottom: "10px" }}>
         <Link to="/doctors/new">Add Doctor</Link>
       </Button>
@@ -36,7 +37,7 @@ const Doctors = () => {
           <List
             renderData={(doc) => {
               return (
-                  <Table.Row>
+                  <Table.Row key={doc.id}>
                     <Table.Cell>{doc.name}</Table.Cell>
                     <Table.Cell>
                       <Link key={doc.id} to={`/doctors/${doc.id}`}>View</Link>
