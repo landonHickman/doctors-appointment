@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Icon, Table } from "semantic-ui-react";
@@ -8,10 +9,15 @@ import useAxiosOnMount from "../../customHooks/useAxiosOnMount";
 import PatientForm from "./PatientForm";
 
 const Patients = () => {
-  const { data, loading, error } = useAxiosOnMount("/api/patients");
+  const { data, loading, error, setData } = useAxiosOnMount("/api/patients");
 
   if (loading) return <Spinner />;
   if (error) return <ErrorMessage error={error} />;
+
+  const deletePatient = async (id) => {
+    let res = await axios.delete(`/api/patients/${id}`)
+    setData( data.filter (d => d.id !== res.data.id))
+  }
 
   return (
     <div>
@@ -44,7 +50,7 @@ const Patients = () => {
                     >
                       <Icon name="edit"></Icon>
                     </Link>
-                    {/* <Icon onClick={()=>deleteApp(app.id)} name='trash'></Icon> */}
+                    <Icon onClick={()=>deletePatient(patient.id)} name='trash'></Icon>
                   </Table.Cell>
                 </Table.Row>
               );
