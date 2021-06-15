@@ -1,55 +1,42 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Form, Select } from 'semantic-ui-react'
+import { useHistory, useLocation, useParams } from 'react-router'
+import { Form} from 'semantic-ui-react'
 
 const PatientForm = (props) => {
-  const {patientId, doctorsData} = props
-  const [date, setDate] = useState('')
-  const [doctorId, setDoctorId] = useState('')
+  const [patientName, setPatientName] = useState([])
+  const history = useHistory()
+  const params = useParams()
+  const location = useLocation()
 
-  const handleSubmit= async (e) => {
-    e.preventDefault()
-
-    try {
-      let res = await axios.post(`/api/appointments`, {date: date, patient_id: patientId, doctor_id: doctorId})
-      //res is passing the new id for appointments and the date only
-      console.log('res',res)
-      
-      // console.log('res.data',res.data)
-      // addApp(res.data)
-    } catch(err){
-      console.log(err)
+  const handleSubmit = async () => {
+    try{
+      if(params.id){
+        await axios.put(`/api/patients/${params.id}`, {name: patientName})
+      }else{
+        await axios.post(`/api/patients`, {name: patientName})
+      }
+    }catch(err){
+      console.log('err',err)
     }
-  }
-
-  const doctorChanged = (e, {value}) => {
-    setDoctorId(value)
+    history.push(`/patients`)
   }
 
   return (
-    <>
-    <Form onSubmit={handleSubmit}>
-      <Form.Group widths='equal'>
-          <Form.Input
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              label='Date'
-              placeholder='Date'
-          />
-
-          <Form.Field
-              control={Select}
-              onChange={doctorChanged}
-              label='Doctors'
-              options={doctorsData}
-              placeholder='Doctors'
-          />
-      </Form.Group>
-      <Form.Button>Submit</Form.Button>
-    </Form>
-    </>
+    <div>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group widths='equal'>
+            <Form.Input
+                defaultValue={location.patient_name}
+                onChange={(e) => setPatientName(e.target.value)}
+                fluid 
+                label={params.id ? 'Edit Patient' : 'Add Patient'}
+                placeholder='Name'
+            /> 
+        </Form.Group>
+        <Form.Button>Submit</Form.Button>
+      </Form>
+    </div>
   )
-
 }
-
 export default PatientForm

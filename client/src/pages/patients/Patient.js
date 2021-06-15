@@ -6,7 +6,6 @@ import List from '../../components/List'
 import Spinner from '../../components/Spinner'
 import useAxiosOnMount from '../../customHooks/useAxiosOnMount'
 
-
 const Patient = () => {
   const {id} = useParams()
   const {data, loading, error} = useAxiosOnMount(`/api/patients/${id}`)

@@ -13,6 +13,7 @@ import Patient from './pages/patients/Patient';
 import Doctor from './pages/doctors/Doctor';
 import AppointmentForm from './pages/appointments/AppointmentForm';
 import Redirect from './pages/Redirect';
+import PatientForm from './pages/patients/PatientForm';
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
       <Route exact path='/redirect' component={Redirect} />
 
       <Route exact path='/patients' component={Patients} />
+      <Route exact path='/patients/new' component={PatientForm} />
+      <Route exact path='/patients/edit/:id' component={PatientForm} />
       <Route exact path='/patients/:id' component={Patient} />
       <Route exact path='/doctors' component={Doctors} />
       <Route exact path='/doctors/:id' component={Doctor} />
