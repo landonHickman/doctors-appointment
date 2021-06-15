@@ -14,6 +14,7 @@ import Doctor from './pages/doctors/Doctor';
 import AppointmentForm from './pages/appointments/AppointmentForm';
 import Redirect from './pages/Redirect';
 import PatientForm from './pages/patients/PatientForm';
+import DoctorsForm from './pages/doctors/DoctorsForm'
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
       <Route exact path='/patients/edit/:id' component={PatientForm} />
       <Route exact path='/patients/:id' component={Patient} />
       <Route exact path='/doctors' component={Doctors} />
+      <Route exact path='/doctors/new' component={DoctorsForm} />
+      <Route exact path='/doctors/edit/:id' component={DoctorsForm} />
       <Route exact path='/doctors/:id' component={Doctor} />
       <Route exact path='/appointments' component={Appointments} />
       <Route exact path='/appointments/edit/:id' component={AppointmentForm} />
